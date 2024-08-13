@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home_flights"
+    app:startDestination="@id/fragmentHomeFlights">
+
+    <fragment
+        android:id="@+id/fragmentHomeFlights"
+        android:name="com.srappetito.flybonditestmvvm.fragments.HomeFlights"
+        android:label="home_fragment"
+        tools:layout="@layout/fragment_home_flights" >
+        <action
+            android:id="@+id/action_fragmentHomeFlights_to_fragmentDetailFlight"
+            app:destination="@id/fragmentDetailFlight" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentDetailFlight"
+        android:name="com.srappetito.flybonditestmvvm.fragments.DetailFlight"
+        android:label="detail_flight"
+        tools:layout="@layout/fragment_detail_flight" >
+        <action
+            android:id="@+id/action_fragmentDetailFlight_to_fragmentHomeFlights"
+            app:destination="@id/fragmentHomeFlights" />
+    </fragment>
+
+</navigation>

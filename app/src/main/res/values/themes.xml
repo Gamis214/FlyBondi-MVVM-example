@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FlyBondiTestMVVM" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">#6b5f00</item>
+        <item name="colorSecondary">#6a5f13</item>
+        <item name="colorTertiary">#4d6700</item>
+        <item name="colorPrimaryContainer">#554b00</item>
+        <item name="colorSecondaryContainer">#f5e58c</item>
+        <item name="colorTertiaryContainer">#c8f758</item>
+    </style>
+
+    <style name="Theme.FlyBondiTestMVVM" parent="Base.Theme.FlyBondiTestMVVM" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.FlyBondiTestMVVM</item>
+    </style>
+
+    <style name="Theme.App.Finish" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+    </style>
+</resources>
