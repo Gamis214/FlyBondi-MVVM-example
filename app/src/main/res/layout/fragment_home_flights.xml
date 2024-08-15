@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="get data from DB"
+        android:text="insert data DB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
@@ -66,4 +66,16 @@
         android:text="get data from Services"
         app:layout_constraintBottom_toTopOf="@+id/getDataFromDB"
         app:layout_constraintStart_toStartOf="@+id/getDataFromDB" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDeleteBD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="10dp"
+        android:drawableLeft="@drawable/ic_trash"
+        android:backgroundTint="@color/design_default_color_error"
+        android:text="DB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

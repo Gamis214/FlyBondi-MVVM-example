@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.srappetito.flybonditestmvvm.adapter.FlightsAdapter
+import com.srappetito.flybonditestmvvm.database.tables.Flights
 import com.srappetito.flybonditestmvvm.databinding.FragmentHomeFlightsBinding
 import com.srappetito.flybonditestmvvm.utils.Status
 import com.srappetito.flybonditestmvvm.utils.StatusLoading
 import com.srappetito.flybonditestmvvm.utils.Utils
 import com.srappetito.flybonditestmvvm.viewModels.HomeFlightsViewModel
+import java.util.Collections
 
 class HomeFlights : Fragment() {
 
@@ -35,6 +37,7 @@ class HomeFlights : Fragment() {
     }
 
     private fun setupUI() {
+        initObservers()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.getDataFromDB.setOnClickListener {
             saveDataInDB()
@@ -42,10 +45,12 @@ class HomeFlights : Fragment() {
         binding.btnGetDataFromServices.setOnClickListener {
             getDataFromServices()
         }
-        initProgressObserver()
+        binding.btnDeleteBD.setOnClickListener {
+            deleteDataInDB()
+        }
     }
 
-    private fun initProgressObserver(){
+    private fun initObservers(){
         viewModel.statusLoading.observe(viewLifecycleOwner){
             with(binding){
                 when(it.status){
@@ -59,6 +64,9 @@ class HomeFlights : Fragment() {
                 }
             }
         }
+        viewModel.showFlights.observe(viewLifecycleOwner){
+            showFlights(it)
+        }
     }
 
     private fun saveDataInDB(){
@@ -67,13 +75,14 @@ class HomeFlights : Fragment() {
                 when (it.status){
                     Status.SUCCESS -> {
                         if(it.data!!){
-                            txtStatusDB.text = "Success SAVING data"
+                            txtStatusDB.text = "Success"
                             txtStatusDB.setTextColor(Color.parseColor("#33cc33"))
                         } else {
                             txtStatusDB.text = "Is data in DB"
                             txtStatusDB.setTextColor(Color.parseColor("#33cc33"))
+                            recyclerView.visibility = View.VISIBLE
                         }
-                        showFlights()
+                        //showFlights()
                     }
                     Status.ERROR -> {
                         txtStatusDB.text = "on Error to save data"
@@ -91,12 +100,10 @@ class HomeFlights : Fragment() {
                     Status.SUCCESS -> {
                         txtStatusServices.text = "SUCCESS DATA"
                         txtStatusServices.setTextColor(Color.parseColor("#33cc33"))
-                        Toast.makeText(requireActivity(),"SUCCESS",Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
                         txtStatusServices.text = "${it.message}"
                         txtStatusServices.setTextColor(Color.parseColor("#cc3300"))
-                        Toast.makeText(requireActivity(),"ERROR",Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -115,6 +122,33 @@ class HomeFlights : Fragment() {
                         progressBar.visibility = View.GONE
                         txtStatusServices.text = it.message
                     }
+                }
+            }
+        }
+    }
+
+    private fun showFlights(lstFlights: List<Flights>){
+        with(binding){
+            if(lstFlights.isNotEmpty()){
+                recyclerView.adapter = FlightsAdapter(lstFlights)
+                if(!recyclerView.isVisible) recyclerView.visibility = View.VISIBLE
+            } else {
+                recyclerView.visibility = View.GONE
+                Toast.makeText(requireActivity(),"EMPTY FLIGHTS LIST",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun deleteDataInDB(){
+        viewModel.deleteAllDataFromDB().observe(viewLifecycleOwner){
+            with(binding){
+                when(it.status){
+                    Status.SUCCESS ->{
+                        Toast.makeText(requireActivity(),"SUCCESS DELETE TABLE",Toast.LENGTH_SHORT).show()
+                        txtStatusDB.text = "Status"
+                        txtStatusDB.setTextColor(Color.parseColor("#000000"))
+                    }
+                    Status.ERROR -> {}
                 }
             }
         }
