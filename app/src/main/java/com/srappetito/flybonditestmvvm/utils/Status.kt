@@ -1,7 +1,12 @@
 package com.srappetito.flybonditestmvvm.utils
 
 enum class Status {
+    //LOADING,
     SUCCESS,
-    ERROR,
-    LOADING
+    ERROR
+}
+
+enum class StatusLoading {
+    LOADING,
+    DISSMISSLOADING
 }
