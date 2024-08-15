@@ -40,7 +40,7 @@ class HomeFlights : Fragment() {
         initObservers()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.getDataFromDB.setOnClickListener {
-            saveDataInDB()
+            saveDataInDB(Utils.getFlightsToSaveDB(requireActivity()))
         }
         binding.btnGetDataFromServices.setOnClickListener {
             getDataFromServices()
@@ -69,20 +69,15 @@ class HomeFlights : Fragment() {
         }
     }
 
-    private fun saveDataInDB(){
-        viewModel.saveAllFlightsInDB(Utils.getFlightsToSaveDB(requireActivity())).observe(viewLifecycleOwner){
+    private fun saveDataInDB(lstFlights: List<Flights>){
+        viewModel.saveAllFlightsInDB(lstFlights).observe(viewLifecycleOwner){
             with(binding){
                 when (it.status){
                     Status.SUCCESS -> {
                         if(it.data!!){
                             txtStatusDB.text = "Success"
                             txtStatusDB.setTextColor(Color.parseColor("#33cc33"))
-                        } else {
-                            txtStatusDB.text = "Is data in DB"
-                            txtStatusDB.setTextColor(Color.parseColor("#33cc33"))
-                            recyclerView.visibility = View.VISIBLE
                         }
-                        //showFlights()
                     }
                     Status.ERROR -> {
                         txtStatusDB.text = "on Error to save data"
@@ -100,6 +95,7 @@ class HomeFlights : Fragment() {
                     Status.SUCCESS -> {
                         txtStatusServices.text = "SUCCESS DATA"
                         txtStatusServices.setTextColor(Color.parseColor("#33cc33"))
+                        saveDataInDB(it.data!!.flights.listFlights)
                     }
                     Status.ERROR -> {
                         txtStatusServices.text = "${it.message}"

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Flights(
     @PrimaryKey(autoGenerate = true)
     var flightId: Int? = null,
-    val date: String,
+    val data: String,
     val origin: String,
     val destination: String,
     val price: Double,

@@ -20,8 +20,8 @@ class FlightsAdapter(private val lstFlights: List<Flights>): RecyclerView.Adapte
     inner class ItemHolder(val binding: ItemFlightsBinding): ViewHolder(binding.root){
         fun bindView(){
             with(binding){
-                txtCount.text = adapterPosition.toString()
-                txtData.text = lstFlights[adapterPosition].date
+                txtCount.text = (adapterPosition + 1).toString()
+                txtData.text = lstFlights[adapterPosition].data
                 txtPrice.text = lstFlights[adapterPosition].price.toString()
                 txtOrigin.text = lstFlights[adapterPosition].origin
                 txtDestination.text = lstFlights[adapterPosition].destination

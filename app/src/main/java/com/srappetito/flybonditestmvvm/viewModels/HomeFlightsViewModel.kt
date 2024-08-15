@@ -33,15 +33,9 @@ class HomeFlightsViewModel(private val application: Application) : AndroidViewMo
         val status = MutableLiveData<Resource<Boolean>>()
         viewModelScope.launch {
             statusLoading.postValue(ResourceLoading.loading())
-            val lstFlights = dbHelper.getAllFlights()
-            if(lstFlights.isEmpty()){
-                dbHelper.insertAllFlights(listFlightsEntity)
-                statusLoading.postValue(ResourceLoading.dismissLoading())
-                status.postValue(Resource.success(true))
-            } else {
-                statusLoading.postValue(ResourceLoading.dismissLoading())
-                status.postValue(Resource.success(false))
-            }
+            dbHelper.insertAllFlights(listFlightsEntity)
+            statusLoading.postValue(ResourceLoading.dismissLoading())
+            status.postValue(Resource.success(true))
         }
         return status
     }
