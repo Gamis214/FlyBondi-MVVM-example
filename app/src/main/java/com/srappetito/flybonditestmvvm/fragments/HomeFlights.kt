@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.srappetito.flybonditestmvvm.adapter.FlightsAdapter
 import com.srappetito.flybonditestmvvm.database.tables.Flights
 import com.srappetito.flybonditestmvvm.databinding.FragmentHomeFlightsBinding
+import com.srappetito.flybonditestmvvm.utils.NetworkResult
 import com.srappetito.flybonditestmvvm.utils.Status
 import com.srappetito.flybonditestmvvm.utils.StatusLoading
 import com.srappetito.flybonditestmvvm.utils.Utils
@@ -91,13 +92,13 @@ class HomeFlights : Fragment() {
     private fun getDataFromServices(){
         viewModel.getFlightsFromServices().observe(viewLifecycleOwner){
             with(binding){
-                when(it.status){
-                    Status.SUCCESS -> {
+                when(it){
+                    is NetworkResult.Success -> {
                         txtStatusServices.text = "SUCCESS DATA"
                         txtStatusServices.setTextColor(Color.parseColor("#33cc33"))
                         saveDataInDB(it.data!!.flights.listFlights)
                     }
-                    Status.ERROR -> {
+                    is NetworkResult.Error -> {
                         txtStatusServices.text = "${it.message}"
                         txtStatusServices.setTextColor(Color.parseColor("#cc3300"))
                     }

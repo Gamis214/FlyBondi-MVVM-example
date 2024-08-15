@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id ("dagger.hilt.android.plugin")
     id ("kotlin-kapt")
 }
 
@@ -49,6 +50,14 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
+    // Hilt
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-android-compiler:2.50")
+
+    // Para soportar kotlin coroutines con hilt
+    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
+
     //Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
@@ -84,7 +93,6 @@ dependencies {
     implementation ("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
         exclude(group = "org.json", module = "json")
     }
-    //implementation ("com.squareup.retrofit2:converter-scalars:2.11.0")
 
     // Splash
     implementation ("androidx.core:core-splashscreen:1.0.1")

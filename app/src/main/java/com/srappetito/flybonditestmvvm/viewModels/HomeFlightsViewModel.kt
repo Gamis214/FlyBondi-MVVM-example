@@ -14,6 +14,8 @@ import com.srappetito.flybonditestmvvm.database.tables.Flights
 import com.srappetito.flybonditestmvvm.models.FlyResponse
 import com.srappetito.flybonditestmvvm.network.retrofit.RetrofitBuilder
 import com.srappetito.flybonditestmvvm.network.retrofit.RetrofitHelperImpl
+import com.srappetito.flybonditestmvvm.network.retrofit.repository.RepositoryRetrofit
+import com.srappetito.flybonditestmvvm.utils.NetworkResult
 import com.srappetito.flybonditestmvvm.utils.Resource
 import com.srappetito.flybonditestmvvm.utils.ResourceLoading
 import com.srappetito.flybonditestmvvm.utils.StatusLoading
@@ -67,22 +69,22 @@ class HomeFlightsViewModel(private val application: Application) : AndroidViewMo
         return status
     }
 
-    fun getFlightsFromServices(): MutableLiveData<Resource<FlyResponse?>>{
-        val status = MutableLiveData<Resource<FlyResponse?>>()
+    fun getFlightsFromServices(): MutableLiveData<NetworkResult<FlyResponse?>>{
+        val status = MutableLiveData<NetworkResult<FlyResponse?>>()
         viewModelScope.launch {
             kotlin.runCatching {
                 statusLoading.postValue(ResourceLoading.loading())
                 withContext(Dispatchers.IO){
-                    RetrofitHelperImpl(RetrofitBuilder.retrofitServices).getAllFlights()
+                    RepositoryRetrofit(RetrofitHelperImpl(RetrofitBuilder.retrofitServices)).getFlights()
                 }
             }.onSuccess {
                 statusLoading.postValue(ResourceLoading.dismissLoading())
-                status.postValue(Resource.success(it))
+                status.postValue(it)
             }.onFailure {
                 statusLoading.postValue(ResourceLoading.dismissLoading())
-                status.postValue(Resource.error(it.message))
             }
         }
         return status
     }
+
 }
