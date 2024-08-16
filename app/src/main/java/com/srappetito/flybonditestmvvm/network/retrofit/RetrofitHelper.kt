@@ -1,10 +1,10 @@
 package com.srappetito.flybonditestmvvm.network.retrofit
 
 import com.srappetito.flybonditestmvvm.models.FlyResponse
-import retrofit2.Response
+import com.srappetito.flybonditestmvvm.utils.NetworkResult
 
 interface RetrofitHelper {
 
-    suspend fun getAllFlights(): Response<FlyResponse?>
+    suspend fun getFlights(): NetworkResult<FlyResponse?>
 
 }

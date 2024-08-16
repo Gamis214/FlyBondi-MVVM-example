@@ -1,18 +1,19 @@
 package com.srappetito.flybonditestmvvm.network.retrofit.repository
 
 import com.srappetito.flybonditestmvvm.models.FlyResponse
-import com.srappetito.flybonditestmvvm.network.retrofit.RetrofitHelperImpl
+import com.srappetito.flybonditestmvvm.network.retrofit.RetrofitHelper
+import com.srappetito.flybonditestmvvm.network.retrofit.interfaces.RetrofitServices
 import com.srappetito.flybonditestmvvm.utils.BaseApiResponse
 import com.srappetito.flybonditestmvvm.utils.NetworkResult
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class RepositoryRetrofit @Inject constructor(private val retrofitHelperImpl: RetrofitHelperImpl): BaseApiResponse() {
+class RepositoryRetrofit @Inject constructor(private val retrofitServices: RetrofitServices): BaseApiResponse(), RetrofitHelper {
 
-    suspend fun getFlights(): NetworkResult<FlyResponse?>{
+    override suspend fun getFlights(): NetworkResult<FlyResponse?> {
         return safeApiCall {
-            retrofitHelperImpl.getAllFlights()
+            retrofitServices.getAllFlies()
         }
     }
 
