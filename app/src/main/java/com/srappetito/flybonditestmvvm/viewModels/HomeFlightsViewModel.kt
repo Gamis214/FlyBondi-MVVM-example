@@ -19,12 +19,14 @@ import com.srappetito.flybonditestmvvm.utils.NetworkResult
 import com.srappetito.flybonditestmvvm.utils.Resource
 import com.srappetito.flybonditestmvvm.utils.ResourceLoading
 import com.srappetito.flybonditestmvvm.utils.StatusLoading
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-@SuppressLint("StaticFieldLeak")
-class HomeFlightsViewModel(private val application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class HomeFlightsViewModel @Inject constructor(private val application: Application,private val repositoryRetrofit: RepositoryRetrofit ) : AndroidViewModel(application) {
 
     private val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(application.applicationContext))
     val statusLoading = MutableLiveData<ResourceLoading<StatusLoading>>()
@@ -75,7 +77,8 @@ class HomeFlightsViewModel(private val application: Application) : AndroidViewMo
             kotlin.runCatching {
                 statusLoading.postValue(ResourceLoading.loading())
                 withContext(Dispatchers.IO){
-                    RepositoryRetrofit(RetrofitHelperImpl(RetrofitBuilder.retrofitServices)).getFlights()
+                    repositoryRetrofit.getFlights()
+                    //RepositoryRetrofit(RetrofitHelperImpl(RetrofitBuilder.retrofitServices)).getFlights()
                 }
             }.onSuccess {
                 statusLoading.postValue(ResourceLoading.dismissLoading())

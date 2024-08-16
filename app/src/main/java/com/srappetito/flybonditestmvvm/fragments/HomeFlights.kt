@@ -18,8 +18,10 @@ import com.srappetito.flybonditestmvvm.utils.Status
 import com.srappetito.flybonditestmvvm.utils.StatusLoading
 import com.srappetito.flybonditestmvvm.utils.Utils
 import com.srappetito.flybonditestmvvm.viewModels.HomeFlightsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Collections
 
+@AndroidEntryPoint
 class HomeFlights : Fragment() {
 
     private var _binding: FragmentHomeFlightsBinding? = null

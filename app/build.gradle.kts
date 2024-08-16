@@ -55,7 +55,7 @@ dependencies {
     kapt ("com.google.dagger:hilt-android-compiler:2.50")
 
     // Para soportar kotlin coroutines con hilt
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    //implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
     //Coroutines
