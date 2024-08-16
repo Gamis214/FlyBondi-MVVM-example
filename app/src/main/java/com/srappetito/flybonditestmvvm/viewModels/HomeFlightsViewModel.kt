@@ -29,7 +29,10 @@ class HomeFlightsViewModel @Inject constructor(
     private val repositoryRoom: RepositoryRoom
 ) : AndroidViewModel(application) {
 
+    //** Usando Hilt se evita hacer toda esta linea de instancias ahora solo se usa @Inject construtor() y se pasan los campos principales.
     //private val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(application.applicationContext))
+    //RepositoryRetrofit(RetrofitHelperImpl(RetrofitBuilder.retrofitServices)).getFlights()
+
     val statusLoading = MutableLiveData<ResourceLoading<StatusLoading>>()
 
     val showFlights: LiveData<List<Flights>> = repositoryRoom.getAllFlightsFlow().asLiveData() // Sirve para escuchar los cambios efectuados en la BD ya sea una INSERCCION O UN DELETE
@@ -79,7 +82,6 @@ class HomeFlightsViewModel @Inject constructor(
                 statusLoading.postValue(ResourceLoading.loading())
                 withContext(Dispatchers.IO){
                     repositoryRetrofit.getFlights()
-                    //RepositoryRetrofit(RetrofitHelperImpl(RetrofitBuilder.retrofitServices)).getFlights()
                 }
             }.onSuccess {
                 statusLoading.postValue(ResourceLoading.dismissLoading())
