@@ -6,6 +6,8 @@
 * Courutines
 * Kotlin Flow
 * MVVM
+* Navigation
+* Splash
   
 ## Links de referencia
 https://blog.devgenius.io/roomdatabase-a-simple-data-entry-application-using-kotlin-coroutines-coroutine-flow-and-viewmodels-ce2621a75a71
