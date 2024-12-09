@@ -43,7 +43,8 @@ class HomeFlights : Fragment() {
         initObservers()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
         binding.getDataFromDB.setOnClickListener {
-            saveDataInDB(Utils.getFlightsToSaveDB(requireActivity()))
+            deleteDataInDB()
+            saveDataInDB(Utils.getFlightsToSaveDB(requireActivity()),isFromAssetsData = true)
         }
         binding.btnGetDataFromServices.setOnClickListener {
             getDataFromServices()
@@ -72,14 +73,16 @@ class HomeFlights : Fragment() {
         }
     }
 
-    private fun saveDataInDB(lstFlights: List<Flights>){
+    private fun saveDataInDB(lstFlights: List<Flights>,isFromAssetsData: Boolean = false){
         viewModel.saveAllFlightsInDB(lstFlights).observe(viewLifecycleOwner){
             with(binding){
                 when (it.status){
                     Status.SUCCESS -> {
                         if(it.data!!){
-                            txtStatusDB.text = "Success"
-                            txtStatusDB.setTextColor(Color.parseColor("#33cc33"))
+                            if(isFromAssetsData){
+                                txtStatusDB.text = "Done"
+                                txtStatusDB.setTextColor(Color.parseColor("#33cc33"))
+                            }
                         }
                     }
                     Status.ERROR -> {
@@ -96,7 +99,7 @@ class HomeFlights : Fragment() {
             with(binding){
                 when(it){
                     is NetworkResult.Success -> {
-                        txtStatusServices.text = "SUCCESS DATA"
+                        txtStatusServices.text = "Done services & save in DB"
                         txtStatusServices.setTextColor(Color.parseColor("#33cc33"))
                         saveDataInDB(it.data!!.flights.listFlights)
                     }
@@ -133,7 +136,7 @@ class HomeFlights : Fragment() {
                 if(!recyclerView.isVisible) recyclerView.visibility = View.VISIBLE
             } else {
                 recyclerView.visibility = View.GONE
-                Toast.makeText(requireActivity(),"EMPTY FLIGHTS LIST",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(),"Empty flights list",Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -143,9 +146,11 @@ class HomeFlights : Fragment() {
             with(binding){
                 when(it.status){
                     Status.SUCCESS ->{
-                        Toast.makeText(requireActivity(),"SUCCESS DELETE TABLE",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(),"Done delete table",Toast.LENGTH_SHORT).show()
                         txtStatusDB.text = "Status"
                         txtStatusDB.setTextColor(Color.parseColor("#000000"))
+                        txtStatusServices.text = "StatusServices"
+                        txtStatusServices.setTextColor(Color.parseColor("#000000"))
                     }
                     Status.ERROR -> {}
                 }
