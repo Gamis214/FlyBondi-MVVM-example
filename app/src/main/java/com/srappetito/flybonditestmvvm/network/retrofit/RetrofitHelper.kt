@@ -5,6 +5,6 @@ import com.srappetito.flybonditestmvvm.utils.NetworkResult
 
 interface RetrofitHelper {
 
-    suspend fun getFlights(): NetworkResult<FlyResponse?>
+    suspend fun getFlights(mockServices: Boolean): NetworkResult<FlyResponse?>
 
 }

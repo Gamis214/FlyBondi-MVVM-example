@@ -81,7 +81,7 @@ class HomeFlightsViewModel @Inject constructor(
             kotlin.runCatching {
                 statusLoading.postValue(ResourceLoading.loading())
                 withContext(Dispatchers.IO){
-                    repositoryRetrofit.getFlights()
+                    repositoryRetrofit.getFlights(mockServices = false)
                 }
             }.onSuccess {
                 statusLoading.postValue(ResourceLoading.dismissLoading())
