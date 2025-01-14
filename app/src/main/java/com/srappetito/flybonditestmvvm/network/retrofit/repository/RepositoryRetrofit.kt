@@ -11,9 +11,12 @@ import javax.inject.Inject
 @ActivityRetainedScoped
 class RepositoryRetrofit @Inject constructor(private val retrofitServices: RetrofitServices): BaseApiResponse(), RetrofitHelper {
 
-    override suspend fun getFlights(): NetworkResult<FlyResponse?> {
+    override suspend fun getFlights(mockServices: Boolean): NetworkResult<FlyResponse?> {
         return safeApiCall {
-            retrofitServices.getAllFlies()
+            if(mockServices)
+                retrofitServices.getAllFliesMock()
+            else
+                retrofitServices.getAllFlies()
         }
     }
 

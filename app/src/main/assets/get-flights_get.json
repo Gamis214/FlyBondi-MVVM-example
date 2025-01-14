@@ -1,0 +1,27 @@
+{
+  "record": {
+    "listFlights": [
+      {
+        "data": "2021-11-15",
+        "origin": "COR",
+        "destination": "MDZ",
+        "price": 474.05,
+        "availability": 9
+      },
+      {
+        "data": "2021-11-15",
+        "origin": "COR",
+        "destination": "BRC",
+        "price": 197.68,
+        "availability": 2
+      },
+      {
+        "data": "2021-11-15",
+        "origin": "EPA",
+        "destination": "BRC",
+        "price": 300.3,
+        "availability": 1
+      }
+    ]
+  }
+}

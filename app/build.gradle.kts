@@ -59,23 +59,23 @@ dependencies {
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
     //Coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
 
     // Multidex
     implementation ("com.android.support:multidex:1.0.3")
 
     // ViewModel - lifeCycle
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
 
     // navigation
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.5")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.5")
 
     // Feature module Support
-    implementation ("androidx.navigation:navigation-dynamic-features-fragment:2.7.7")
+    implementation ("androidx.navigation:navigation-dynamic-features-fragment:2.8.5")
     implementation ("androidx.legacy:legacy-support-v4:1.0.0")
 
     // Room Feature
@@ -93,6 +93,9 @@ dependencies {
     implementation ("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
         exclude(group = "org.json", module = "json")
     }
+
+    //MOCK RETROFIT
+    implementation ("com.github.mustafayigitt:MockResponseInterceptor:1.0.0")
 
     // Splash
     implementation ("androidx.core:core-splashscreen:1.0.1")

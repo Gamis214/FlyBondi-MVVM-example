@@ -1,11 +1,14 @@
 package com.srappetito.flybonditestmvvm.network.retrofit
 
+import android.content.Context
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
+import com.mustafayigit.mockresponseinterceptor.MockResponseInterceptor
 import com.srappetito.flybonditestmvvm.network.retrofit.interfaces.RetrofitServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.internal.platform.Platform
@@ -22,7 +25,9 @@ object RetrofitBuilder {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient{
+    fun provideHttpClient(
+        @ApplicationContext context: Context
+    ): OkHttpClient{
         return OkHttpClient.Builder()
             .connectTimeout(120,TimeUnit.SECONDS)
             .readTimeout(60,TimeUnit.SECONDS)
@@ -32,8 +37,16 @@ object RetrofitBuilder {
                     .setLevel(Level.BASIC)
                     .log(Platform.INFO)
                     .build()
-            ).build()
-
+            )
+            .addInterceptor(
+                MockResponseInterceptor.Builder(context.assets)
+                    .isGlobalMockingEnabled { true }
+                    .fileNameExtractor { requestUrl ->
+                        val path = requestUrl.split("?").firstOrNull() ?: ""
+                        path
+                    }
+                    .build())
+            .build()
     }
 
     @Singleton
